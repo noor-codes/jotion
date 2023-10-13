@@ -1,4 +1,6 @@
 import Heading from './_components/heading'
+
+import { Footer } from './_components/footer'
 import { Heroes } from './_components/heroes'
 
 export default function MarketingPage() {
@@ -8,6 +10,7 @@ export default function MarketingPage() {
         <Heading />
         <Heroes />
       </div>
+      <Footer />
     </div>
   )
 }
