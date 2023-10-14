@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
 import { useMediaQuery } from 'usehooks-ts'
 import { ChevronsLeft, MenuIcon } from 'lucide-react'
-import { ElementRef, useRef, useState } from 'react'
+import { ElementRef, useEffect, useRef, useState } from 'react'
 
 export default function Navigation() {
   // const router = useRouter();
@@ -20,6 +20,21 @@ export default function Navigation() {
   const navbarRef = useRef<ElementRef<'div'>>(null)
   const [isResetting, setIsResetting] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(isMobile)
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse()
+    } else {
+      resetWidth()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile])
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse()
+    }
+  }, [pathname, isMobile])
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.preventDefault()
