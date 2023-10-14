@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useMediaQuery } from 'usehooks-ts'
 import { ChevronsLeft, MenuIcon } from 'lucide-react'
 import { ElementRef, useEffect, useRef, useState } from 'react'
+import { UserItem } from './user-item'
 
 export default function Navigation() {
   // const router = useRouter();
@@ -99,6 +100,11 @@ export default function Navigation() {
           isMobile && 'w-0'
         )}
       >
+        <UserItem />
+
+        {/* <Item label='Search' icon={Search} isSearch onClick={search.onOpen} />
+          <Item label='Settings' icon={Settings} onClick={settings.onOpen} />
+        <Item onClick={handleCreate} label='New page' icon={PlusCircle} /> */}
         <div
           role='button'
           onClick={collapse}
@@ -108,23 +114,6 @@ export default function Navigation() {
           )}
         >
           <ChevronsLeft className='h-6 w-6' />
-          {/* <UserItem />
-          <Item
-            label="Search"
-            icon={Search}
-            isSearch
-            onClick={search.onOpen}
-          />
-          <Item
-            label="Settings"
-            icon={Settings}
-            onClick={settings.onOpen}
-          />
-          <Item
-            onClick={handleCreate}
-            label="New page"
-            icon={PlusCircle}
-          /> */}
         </div>
 
         <div className='mt-4'>
