@@ -5,12 +5,13 @@ import Item from './item'
 import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
 import { UserItem } from './user-item'
+import { toast } from 'sonner'
 import { usePathname } from 'next/navigation'
+import { useMutation } from 'convex/react'
+import { DocumentList } from './Document-list'
 import { useMediaQuery } from 'usehooks-ts'
-import { useQuery, useMutation } from 'convex/react'
 import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from 'lucide-react'
 import { ElementRef, useEffect, useRef, useState } from 'react'
-import { toast } from 'sonner'
 
 export default function Navigation() {
   // const router = useRouter();
@@ -19,7 +20,6 @@ export default function Navigation() {
   // const params = useParams();
   const pathname = usePathname()
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const documents = useQuery(api.documents.get)
   const create = useMutation(api.documents.create)
 
   const isResizingRef = useRef(false)
@@ -133,10 +133,8 @@ export default function Navigation() {
         </div>
 
         <div className='mt-4'>
-          {documents?.map((document) => {
-            return <p key={document._id}>{document.title}</p>
-          })}
-          {/* <DocumentList />
+          <DocumentList />
+          {/*
           <Item
             onClick={handleCreate}
             icon={Plus}
