@@ -1,13 +1,16 @@
 'use client'
 
+import Item from './item'
+
 import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
-import { useQuery } from 'convex/react'
 import { UserItem } from './user-item'
 import { usePathname } from 'next/navigation'
 import { useMediaQuery } from 'usehooks-ts'
-import { ChevronsLeft, MenuIcon } from 'lucide-react'
+import { useQuery, useMutation } from 'convex/react'
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from 'lucide-react'
 import { ElementRef, useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 export default function Navigation() {
   // const router = useRouter();
@@ -17,7 +20,7 @@ export default function Navigation() {
   const pathname = usePathname()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const documents = useQuery(api.documents.get)
-  // const create = useMutation(api.documents.create);
+  const create = useMutation(api.documents.create)
 
   const isResizingRef = useRef(false)
   const sidebarRef = useRef<ElementRef<'aside'>>(null)
@@ -93,6 +96,16 @@ export default function Navigation() {
     }
   }
 
+  const handleCreate = () => {
+    const promise = create({ title: 'Untitled' })
+
+    toast.promise(promise, {
+      loading: 'Creating a new note...',
+      success: 'New note created!',
+      error: 'Failed to create a new note.'
+    })
+  }
+
   return (
     <>
       <aside
@@ -104,10 +117,10 @@ export default function Navigation() {
         )}
       >
         <UserItem />
+        <Item label='Search' icon={Search} isSearch onClick={() => {}} />
+        <Item label='Settings' icon={Settings} onClick={() => {}} />
+        <Item onClick={handleCreate} label='New page' icon={PlusCircle} />
 
-        {/* <Item label='Search' icon={Search} isSearch onClick={search.onOpen} />
-          <Item label='Settings' icon={Settings} onClick={settings.onOpen} />
-        <Item onClick={handleCreate} label='New page' icon={PlusCircle} /> */}
         <div
           role='button'
           onClick={collapse}
