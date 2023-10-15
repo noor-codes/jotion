@@ -1,11 +1,13 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { api } from '@/convex/_generated/api'
+import { useQuery } from 'convex/react'
+import { UserItem } from './user-item'
 import { usePathname } from 'next/navigation'
 import { useMediaQuery } from 'usehooks-ts'
 import { ChevronsLeft, MenuIcon } from 'lucide-react'
 import { ElementRef, useEffect, useRef, useState } from 'react'
-import { UserItem } from './user-item'
 
 export default function Navigation() {
   // const router = useRouter();
@@ -14,6 +16,7 @@ export default function Navigation() {
   // const params = useParams();
   const pathname = usePathname()
   const isMobile = useMediaQuery('(max-width: 768px)')
+  const documents = useQuery(api.documents.get)
   // const create = useMutation(api.documents.create);
 
   const isResizingRef = useRef(false)
@@ -117,7 +120,9 @@ export default function Navigation() {
         </div>
 
         <div className='mt-4'>
-          Documents
+          {documents?.map((document) => {
+            return <p key={document._id}>{document.title}</p>
+          })}
           {/* <DocumentList />
           <Item
             onClick={handleCreate}
