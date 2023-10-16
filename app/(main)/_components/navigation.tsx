@@ -9,8 +9,9 @@ import { usePathname } from 'next/navigation'
 import { useMutation } from 'convex/react'
 import { DocumentList } from './Document-list'
 import { useMediaQuery } from 'usehooks-ts'
-import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from 'lucide-react'
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
 import { ElementRef, useEffect, useRef, useState } from 'react'
+import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 
 export default function Navigation() {
   // const router = useRouter();
@@ -133,23 +134,17 @@ export default function Navigation() {
 
         <div className='mt-4'>
           <DocumentList />
-          {/*
-          <Item
-            onClick={handleCreate}
-            icon={Plus}
-            label="Add a page"
-          />
+
+          <Item onClick={handleCreate} icon={Plus} label='Add a page' />
           <Popover>
-            <PopoverTrigger className="w-full mt-4">
-              <Item label="Trash" icon={Trash} />
+            <PopoverTrigger className='w-full mt-4'>
+              <Item label='Trash' icon={Trash} />
             </PopoverTrigger>
-            <PopoverContent
-              className="p-0 w-72"
-              side={isMobile ? "bottom" : "right"}
-            >
-              <TrashBox />
+            <PopoverContent className='p-0 w-72' side={isMobile ? 'bottom' : 'right'}>
+              {/* <TrashBox /> */}
+              <p>trash box</p>
             </PopoverContent>
-          </Popover> */}
+          </Popover>
         </div>
 
         <div

@@ -270,6 +270,7 @@ export const update = mutation({
 
     const userId = identity.subject
 
+    // eslint-disable-next-line no-unused-vars
     const { id, ...rest } = args
 
     const existingDocument = await ctx.db.get(args.id)
