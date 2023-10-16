@@ -4,21 +4,22 @@ import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
 import { Item } from './item'
 import { toast } from 'sonner'
+import { Navbar } from '@/app/(marketing)/_components/navbar'
 import { TrashBox } from './trash-box'
 import { UserItem } from './user-item'
 import { useSearch } from '@/hooks/use-search'
-import { useParams, usePathname } from 'next/navigation'
+import { useSettings } from '@/hooks/use-settings'
 import { useMutation } from 'convex/react'
 import { DocumentList } from './Document-list'
 import { useMediaQuery } from 'usehooks-ts'
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
+import { useParams, usePathname } from 'next/navigation'
 import { ElementRef, useEffect, useRef, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
-import { Navbar } from '@/app/(marketing)/_components/navbar'
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
 
 export default function Navigation() {
   // const router = useRouter();
-  // const settings = useSettings();
+  const settings = useSettings()
   const search = useSearch()
   const params = useParams()
   const pathname = usePathname()
@@ -121,7 +122,7 @@ export default function Navigation() {
       >
         <UserItem />
         <Item label='Search' icon={Search} isSearch onClick={search.onOpen} />
-        <Item label='Settings' icon={Settings} onClick={() => {}} />
+        <Item label='Settings' icon={Settings} onClick={settings.onOpen} />
         <Item onClick={handleCreate} label='New page' icon={PlusCircle} />
 
         <div
