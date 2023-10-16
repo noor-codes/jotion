@@ -1,21 +1,23 @@
-'use client '
+'use client'
 
 import { cn } from '@/lib/utils'
 import { Id } from '@/convex/_generated/dataModel'
 import { api } from '@/convex/_generated/api'
 import { toast } from 'sonner'
+import { useUser } from '@clerk/clerk-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useRouter } from 'next/navigation'
 import { useMutation } from 'convex/react'
-import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus } from 'lucide-react'
+
+import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus, Trash } from 'lucide-react'
 
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@radix-ui/react-dropdown-menu'
+  DropdownMenuSeparator
+} from '@/components/ui/dropdown-menu'
 
 interface ItemProps {
   id?: Id<'documents'>
@@ -30,7 +32,7 @@ interface ItemProps {
   icon: LucideIcon
 }
 
-export default function Item({
+export const Item = ({
   id,
   label,
   onClick,
@@ -41,10 +43,23 @@ export default function Item({
   level = 0,
   onExpand,
   expanded
-}: ItemProps) {
+}: ItemProps) => {
+  const user = useUser()
   const router = useRouter()
   const create = useMutation(api.documents.create)
-  // const archive = useMutation(api.documents.archive);
+  const archive = useMutation(api.documents.archive)
+
+  const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation()
+    if (!id) return
+    const promise = archive({ id }).then(() => router.push('/documents'))
+
+    toast.promise(promise, {
+      loading: 'Moving to trash...',
+      success: 'Note moved to trash!',
+      error: 'Failed to archive note.'
+    })
+  }
 
   const handleExpand = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
@@ -59,7 +74,8 @@ export default function Item({
       if (!expanded) {
         onExpand?.()
       }
-      // router.push(`/documents/${documentId}`)
+
+      router.push(`/documents/${documentId}`)
     })
 
     toast.promise(promise, {
@@ -75,9 +91,11 @@ export default function Item({
     <div
       onClick={onClick}
       role='button'
-      style={{ paddingLeft: level ? `${level * 12 + 12}px` : '12px' }}
+      style={{
+        paddingLeft: level ? `${level * 12 + 12}px` : '12px'
+      }}
       className={cn(
-        "group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium'",
+        'group min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium',
         active && 'bg-primary/5 text-primary'
       )}
     >
@@ -98,7 +116,6 @@ export default function Item({
       )}
 
       <span className='truncate'>{label}</span>
-
       {isSearch && (
         <kbd className='ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100'>
           <span className='text-xs'>⌘</span>K
@@ -117,13 +134,15 @@ export default function Item({
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className='w-60' align='start' side='right' forceMount>
-              <DropdownMenuItem
-              // onClick={onArchive}
-              ></DropdownMenuItem>
+              <DropdownMenuItem onClick={onArchive}>
+                <Trash className='h-4 w-4 mr-2' />
+                Delete
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <div className='text-xs text-muted-foreground p-2'></div>
+              <div className='text-xs text-muted-foreground p-2'>Last edited by: {user.user?.fullName}</div>
             </DropdownMenuContent>
           </DropdownMenu>
+
           <div
             role='button'
             onClick={onCreate}
