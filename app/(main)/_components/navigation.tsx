@@ -4,9 +4,10 @@ import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
 import { Item } from './item'
 import { toast } from 'sonner'
-import { Navbar } from '@/app/(marketing)/_components/navbar'
+import { Navbar } from './navbar'
 import { TrashBox } from './trash-box'
 import { UserItem } from './user-item'
+import { useRouter } from 'next/navigation'
 import { useSearch } from '@/hooks/use-search'
 import { useSettings } from '@/hooks/use-settings'
 import { useMutation } from 'convex/react'
@@ -18,7 +19,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
 
 export default function Navigation() {
-  // const router = useRouter();
+  const router = useRouter()
   const settings = useSettings()
   const search = useSearch()
   const params = useParams()
@@ -101,7 +102,9 @@ export default function Navigation() {
   }
 
   const handleCreate = () => {
-    const promise = create({ title: 'Untitled' })
+    const promise = create({ title: 'Untitled' }).then((documentId) =>
+      router.push(`/documents/${documentId}`)
+    )
 
     toast.promise(promise, {
       loading: 'Creating a new note...',
@@ -166,9 +169,7 @@ export default function Navigation() {
         )}
       >
         {!!params.documentId ? (
-          <Navbar
-          //  isCollapsed={isCollapsed} onResetWidth={resetWidth}
-          />
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
         ) : (
           <nav className='bg-transparent px-3 py-2 w-full'>
             {isCollapsed && (
