@@ -1,6 +1,5 @@
 'use client'
 
-import Editor from '@/components/editor'
 import dynamic from 'next/dynamic'
 
 import { Cover } from '@/components/cover'
