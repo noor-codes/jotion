@@ -18,7 +18,7 @@ import { ElementRef, useEffect, useRef, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash } from 'lucide-react'
 
-export default function Navigation() {
+export function Navigation() {
   const router = useRouter()
   const settings = useSettings()
   const search = useSearch()
