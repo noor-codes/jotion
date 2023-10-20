@@ -8,13 +8,17 @@ import { Button } from '@/components/ui/button'
 import { useUser } from '@clerk/clerk-react'
 import { PlusCircle } from 'lucide-react'
 import { useMutation } from 'convex/react'
+import { useRouter } from 'next/navigation'
 
 export default function DocumentsPage() {
   const { user } = useUser()
+  const router = useRouter()
   const create = useMutation(api.documents.create)
 
   const onCreate = () => {
-    const promise = create({ title: 'Untitled' })
+    const promise = create({ title: 'Untitled' }).then((documentId) => {
+      router.push(`documents/${documentId}`)
+    })
     toast.promise(promise, {
       loading: 'Creating a new note...',
       success: 'New note created.',
