@@ -5,14 +5,10 @@ import { api } from '@/convex/_generated/api'
 import { Menu } from './menu'
 import { Title } from './title'
 import { Banner } from './banner'
+import { Publish } from './publish'
 import { useQuery } from 'convex/react'
 import { MenuIcon } from 'lucide-react'
 import { useParams } from 'next/navigation'
-
-// import { Title } from './title'
-// import { Banner } from './banner'
-// import { Menu } from './menu'
-// import { Publish } from './publish'
 
 interface NavbarProps {
   isCollapsed: boolean
@@ -50,7 +46,7 @@ export const Navbar = ({ isCollapsed, onResetWidth }: NavbarProps) => {
         <div className='flex items-center justify-between w-full'>
           <Title initialData={document} />
           <div className='flex items-center gap-x-2'>
-            {/* <Publish initialData={document} /> */}
+            <Publish initialData={document} />
             <Menu documentId={document._id} />
           </div>
         </div>
