@@ -8,8 +8,8 @@ import { ArrowRight } from 'lucide-react'
 import { SignInButton } from '@clerk/clerk-react'
 import { useConvexAuth } from 'convex/react'
 
-export default function Heading() {
-  const { isLoading, isAuthenticated } = useConvexAuth()
+export const Heading = () => {
+  const { isAuthenticated, isLoading } = useConvexAuth()
 
   return (
     <div className='max-w-3xl space-y-4'>
@@ -18,7 +18,8 @@ export default function Heading() {
       </h1>
 
       <h3 className='text-base sm:text-xl md:text-2xl font-medium'>
-        Jotion is the connected workspace where <br /> better, faster work happens
+        Jotion is the connected workspace where <br />
+        better, faster work happens.
       </h3>
 
       {isLoading && (

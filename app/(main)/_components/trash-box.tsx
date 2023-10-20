@@ -1,16 +1,15 @@
 'use client'
 
+import { Id } from '@/convex/_generated/dataModel'
+import { api } from '@/convex/_generated/api'
+import { toast } from 'sonner'
+import { Input } from '@/components/ui/input'
+import { Spinner } from '@/components/spinner'
 import { useState } from 'react'
+import { ConfirmModal } from '@/components/modals/confirm-modal'
 import { useParams, useRouter } from 'next/navigation'
 import { useQuery, useMutation } from 'convex/react'
 import { Search, Trash, Undo } from 'lucide-react'
-import { toast } from 'sonner'
-
-import { api } from '@/convex/_generated/api'
-import { Id } from '@/convex/_generated/dataModel'
-import { Spinner } from '@/components/spinner'
-import { Input } from '@/components/ui/input'
-import { ConfirmModal } from '../../../components/modals/confirm-modal'
 
 export const TrashBox = () => {
   const router = useRouter()
@@ -63,7 +62,7 @@ export const TrashBox = () => {
   }
 
   return (
-    <div className='text-sm border rounded p-1'>
+    <div className='text-sm'>
       <div className='flex items-center gap-x-1 p-2'>
         <Search className='h-4 w-4' />
         <Input

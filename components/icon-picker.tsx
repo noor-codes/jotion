@@ -1,4 +1,5 @@
-'use-client'
+'use client'
+
 import EmojiPicker, { Theme } from 'emoji-picker-react'
 
 import { useTheme } from 'next-themes'

@@ -44,7 +44,7 @@ export const Item = ({
   onExpand,
   expanded
 }: ItemProps) => {
-  const user = useUser()
+  const { user } = useUser()
   const router = useRouter()
   const create = useMutation(api.documents.create)
   const archive = useMutation(api.documents.archive)
@@ -125,7 +125,7 @@ export const Item = ({
       {!!id && (
         <div className='ml-auto flex items-center gap-x-2'>
           <DropdownMenu>
-            <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
+            <DropdownMenuTrigger onClick={(e: { stopPropagation: () => any }) => e.stopPropagation()} asChild>
               <div
                 role='button'
                 className='opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600'
@@ -139,7 +139,7 @@ export const Item = ({
                 Delete
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <div className='text-xs text-muted-foreground p-2'>Last edited by: {user.user?.fullName}</div>
+              <div className='text-xs text-muted-foreground p-2'>Last edited by: {user?.fullName}</div>
             </DropdownMenuContent>
           </DropdownMenu>
 
